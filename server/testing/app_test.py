@@ -95,7 +95,7 @@ class TestApp:
         assert response.content_type == 'application/json'
 
     def test_baked_goods_by_price_returns_list_of_baked_goods_in_descending_order(self):
-        '''returns JSON representing one models.Bakery object.'''
+        '''returns JSON representing list of models.BakedGood objects in descending price order.'''
         with app.app_context():
             prices = [baked_good.price for baked_good in BakedGood.query.all()]
             highest_price = max(prices)
@@ -131,12 +131,12 @@ class TestApp:
         assert(response.status_code == 200)
 
     def test_most_expensive_baked_good_route_returns_json(self):
-        '''provides a response content type of application/json at "/bakeries/<int:id>"'''
+        '''provides a response content type of application/json at "/baked_goods/most_expensive"'''
         response = app.test_client().get('/baked_goods/most_expensive')
         assert response.content_type == 'application/json'
 
     def test_most_expensive_baked_good_route_returns_one_baked_good_object(self):
-        '''returns JSON representing one models.BakedGood object.'''
+        '''returns JSON representing a baked good object from "/baked_goods/most_expensive".'''
         with app.app_context():
             prices = [baked_good.price for baked_good in BakedGood.query.all()]
             highest_price = max(prices)
@@ -161,7 +161,7 @@ class TestApp:
             db.session.commit()
     
     def test_most_expensive_baked_good_route_returns_most_expensive_baked_good_object(self):
-        '''returns JSON representing one models.BakedGood object.'''
+        '''returns the most expensive baked good object based on price.'''
         with app.app_context():
             prices = [baked_good.price for baked_good in BakedGood.query.all()]
             highest_price = max(prices)
